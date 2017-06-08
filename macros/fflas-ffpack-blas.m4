@@ -119,7 +119,10 @@ AC_DEFUN([FF_CHECK_USER_BLAS],
 				dnl  AC_SUBST(CBLAS_FLAG)
 				dnl  AC_SUBST(BLAS_PATH)
 				AC_DEFINE(HAVE_BLAS,1,[Define if BLAS is installed])
-				AC_DEFINE(HAVE_CBLAS,1,[Define if C interface to BLAS is installed])
+
+				# we haven't actually tested for the existence of CBLAS yet, so don't claim it's been installed:
+				# AC_DEFINE(HAVE_CBLAS,1,[Define if C interface to BLAS is installed])
+
 				BLAS_FOUND=true
 				AC_SUBST(BLAS_FOUND)
 				dnl  AC_DEFINE(BLAS_AVAILABLE,,[Define if BLAS routines are available])
