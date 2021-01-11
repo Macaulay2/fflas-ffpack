@@ -23,19 +23,17 @@
 SUBDIRS =
 benchmarks:  $(BENCHMARKS)
 
-AM_CXXFLAGS = @DEFAULT_CFLAGS@ -I$(top_srcdir) $(PRECOMPILE_FLAGS)
-
+AM_CXXFLAGS = $(FFLASFFPACK_CXXFLAGS) $(GIVARO_CFLAGS) $(BLAS_CFLAGS) $(PARFLAGS) $(PRECOMPILE_FLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)
+LDADD = $(GIVARO_LIBS) $(BLAS_LIBS) $(PARLIBS)
 if FFLASFFPACK_PRECOMPILED
-LDADD = $(CBLAS_LIBS) $(GIVARO_LIBS) $(CUDA_LIBS) $(PARLIBS) \
-	$(top_builddir)/fflas-ffpack/interfaces/libs/libfflas.la \
-	$(top_builddir)/fflas-ffpack/interfaces/libs/libffpack.la
-else
-LDADD = $(CBLAS_LIBS) $(GIVARO_LIBS) $(CUDA_LIBS) $(PARLIBS)
+LDADD += $(top_builddir)/fflas-ffpack/interfaces/libs/libfflas.la
+LDADD += $(top_builddir)/fflas-ffpack/interfaces/libs/libffpack.la
 endif
 
 PERFPUBLISHERFILE=benchmarks-report.xml
 
-FFLA_BENCH =    benchmark-fgemm benchmark-fgemm-rns benchmark-wino benchmark-ftrsm  benchmark-fgesv benchmark-ftrsv benchmark-ftrtri  benchmark-inverse benchmark-fsytrf benchmark-fsyrk  benchmark-lqup benchmark-pluq benchmark-charpoly benchmark-charpoly-mp benchmark-fgemm-mp benchmark-fgemv-mp benchmark-ftrsm-mp benchmark-lqup-mp benchmark-checkers benchmark-fadd-lvl2 benchmark-fdot benchmark-fgemv 
+FFLA_BENCH =    benchmark-fgemm benchmark-fgemm-rns benchmark-wino benchmark-ftrsm  benchmark-fgesv benchmark-ftrsv benchmark-ftrtri  benchmark-inverse benchmark-fsytrf benchmark-fsyrk  benchmark-lqup benchmark-pluq benchmark-charpoly benchmark-charpoly-mp benchmark-fgemm-mp benchmark-fgemv-mp benchmark-ftrsm-mp benchmark-lqup-mp benchmark-checkers benchmark-fadd-lvl2 benchmark-fdot benchmark-fgemv benchmark-quasisep
 
 BLAS_BENCH =    benchmark-sgemm$(EXEEXT) benchmark-dgemm benchmark-dtrsm
 LAPA_BENCH =    benchmark-dtrtri benchmark-dgetri benchmark-dgetrf benchmark-dsytrf
@@ -76,6 +74,7 @@ benchmark_ftrtri_SOURCES = benchmark-ftrtri.C
 benchmark_inverse_SOURCES = benchmark-inverse.C
 benchmark_fsytrf_SOURCES = benchmark-fsytrf.C
 benchmark_fsyrk_SOURCES = benchmark-fsyrk.C
+benchmark_quasisep_SOURCES = benchmark-quasisep.C
 benchmark_charpoly_SOURCES = benchmark-charpoly.C
 benchmark_charpoly_mp_SOURCES = benchmark-charpoly-mp.C
 benchmark_lqup_SOURCES = benchmark-lqup.C
